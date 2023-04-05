@@ -1,0 +1,132 @@
+
+
+
+
+<section
+  class="relative bg-[url(https://image.tmdb.org/t/p/original/ovM06PdF3M8wvKb06i4sjW3xoww.jpg)] bg-cover bg-center bg-no-repeat">
+  <div class="absolute inset-0 bg-white/50 sm:bg-transparent sm:bg-gradient-to-r sm:from-white/95 sm:to-white/25"></div>
+
+  <div class="relative mx-auto max-w-screen-xl px-4 py-32 sm:px-6 lg:flex lg:h-screen lg:items-center lg:px-8">
+    <div class="max-w-xl text-center sm:text-left">
+      <h1 class="text-3xl font-extrabold sm:text-5xl">
+        Let us find your
+
+        <strong class="block font-extrabold text-[#b4ab03] drop-shadow-xl">
+          Favorite Movie.
+        </strong>
+      </h1>
+
+      <p class="mt-4 max-w-lg sm:text-xl sm:leading-relaxed">
+        Welcome.
+        Millions of movies, TV shows and people to discover. Explore now.
+      </p>
+
+      <div class="mt-8 flex flex-wrap gap-4 text-center">
+        <a href="#"
+          class="block w-full rounded bg-[#b4ab03] px-12 py-3 text-sm font-medium text-white shadow hover:bg-[#e4d804] focus:outline-none focus:ring active:bg-[#e4d804] transition-all duration-500 sm:w-auto">
+          Get Started
+        </a>
+
+        <a href="#"
+          class="block w-full rounded bg-white px-12 py-3 text-sm font-medium text-[#b4ab03] shadow hover:text-[#b4ab03] focus:outline-none focus:ring active:text-[#b4ab03] transition-all duration-500 sm:w-auto">
+          Learn More
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div>
+  <button (click)="switch()" class="relative text-white flex items-center justify-between border border-[#b4ab03] transition-all duration-500 gap-6 m-10 px-6 py-2 rounded-3xl overflow-hidden">
+    <span [ngClass]="{'right-0' : Switch,'left-0':!Switch}" class="absolute w-1/2 h-full left-0 bg-[#b4ab03] transition-transform"></span>
+    <span class="relative">Day</span>
+    <span class="relative">Week</span>
+  </button>
+</div>
+<!-- Trending -->
+
+<section id="trending">
+  <h1 class="font-bold text-2xl m-4 px-6 text-[#e4d804]">Trending</h1>
+  <div class="flex  m-4 w-full  items-center scroll-smooth rounded">
+    <div class="flex px-4 overflow-x-scroll snap-x scroll-p-6 scroll-m-5 w-screen">
+      <div *ngFor="let movie of Tmovies | async" class="flex m-4 bg-gray-900 shadow-lg px-4 rounded-md">
+        <div [routerLink]="['/single',movie.id]" class="w-[200px] md:w-[320px] text-white cursor-pointer">
+          <img alt="image" class="object-cover object-center" src="https://image.tmdb.org/t/p/w500{{movie.poster_path}}">
+          <div class="mt-4">
+            <h2 class="text-red-600 title-font text-lg font-medium">{{movie.title}}</h2>
+            <h3 class="text-gray-500 text-xs tracking-widest title-font mb-1">{{movie.release_date | date: 'longDate'}}
+            </h3>
+            <p class="mt-1"><i class="fa-solid fa-star text-[#f5c518] shadow-lg"></i> {{movie.vote_average | number:
+              '1.0-0'}}/10</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Popular -->
+
+<section id="popular">
+  <h1 class="font-bold text-2xl m-4 px-6 text-[#e4d804]">Popular</h1>
+  <div class="flex  m-4 w-full  items-center scroll-smooth rounded">
+    <div class="flex px-4 overflow-x-scroll snap-x scroll-p-6 scroll-m-5 w-full">
+      <div *ngFor="let movie of Pmovies | async" class="flex m-4 bg-gray-900 shadow-lg px-4 rounded-md">
+        <div class="w-[200px] md:w-[320px] text-white">
+          <img alt="image" class="object-cover object-center" src="https://image.tmdb.org/t/p/w500{{movie.poster_path}}">
+          <div class="mt-4">
+            <h2 class="text-red-600 title-font text-lg font-medium">{{movie.title}}</h2>
+            <h3 class="text-gray-500 text-xs tracking-widest title-font mb-1">{{movie.release_date | date: 'longDate'}}
+            </h3>
+            <p class="mt-1"><i class="fa-solid fa-star text-[#f5c518] shadow-lg"></i> {{movie.vote_average | number:
+              '1.0-0'}}/10</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Upcoming -->
+
+<section id="upcoming">
+  <h1 class="font-bold text-2xl m-4 px-6 text-[#e4d804]">Upcoming</h1>
+  <div class="flex  m-4 w-full  items-center scroll-smooth rounded">
+    <div class="flex px-4 overflow-x-scroll snap-x scroll-p-6 scroll-m-5 w-full">
+      <div *ngFor="let movie of Umovies | async" class="flex m-4 bg-gray-900 shadow-lg px-4 rounded-md">
+        <div class="w-[200px] md:w-[320px] text-white">
+          <img alt="image" class="object-cover object-center" src="https://image.tmdb.org/t/p/w500{{movie.poster_path}}">
+          <div class="mt-4">
+            <h2 class="text-red-600 title-font text-lg font-medium">{{movie.title}}</h2>
+            <h3 class="text-gray-500 text-xs tracking-widest title-font mb-1">{{movie.release_date | date: 'longDate'}}
+            </h3>
+            <p class="mt-1"><i class="fa-solid fa-star text-[#f5c518] shadow-lg"></i> {{movie.vote_average | number:
+              '1.0-0'}}/10</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Tv Shows -->
+
+<section id="tv">
+  <h1 class="font-bold text-2xl m-4 px-6 text-[#e4d804]">TV Shows</h1>
+  <div class="flex  m-4 w-full  items-center scroll-smooth rounded">
+    <div class="flex px-4 overflow-x-scroll snap-x scroll-p-6 scroll-m-5 w-full">
+      <div *ngFor="let movie of Umovies | async" class="flex m-4 bg-gray-900 shadow-lg px-4 rounded-md">
+        <div class="w-[200px] md:w-[320px] text-white">
+          <img alt="image" class="object-cover object-center" src="https://image.tmdb.org/t/p/w500{{movie.poster_path}}">
+          <div class="mt-4">
+            <h2 class="text-red-600 title-font text-lg font-medium">{{movie.title}}</h2>
+            <h3 class="text-gray-500 text-xs tracking-widest title-font mb-1">{{movie.release_date | date: 'longDate'}}
+            </h3>
+            <p class="mt-1"><i class="fa-solid fa-star text-[#f5c518] shadow-lg"></i> {{movie.vote_average | number:
+              '1.0-0'}}/10</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

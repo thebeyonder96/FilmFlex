@@ -1,0 +1,15 @@
+<section class="mx-[60px]">
+  <div *ngIf="movieDetail">
+    <div class="flex justify-between gap-8 rounded-md overflow-hidden">
+      <div class="basis-1/2 w-full h-full">
+        <img class="w-full" src="https://image.tmdb.org/t/p/w500{{movieDetail.backdrop_path}}" alt="">
+      </div>
+      <div class="basis-1/2  w-full h-full py-8">
+        <h1 class="text-3xl font-bold">{{movieDetail.title}} <span class="font-normal text-xl">({{movieDetail.release_date | date : 'yyyy'}})</span></h1>
+        <h2>{{movieDetail.runtime }}</h2>
+        <h3 class="font-semibold mt-2">Overview</h3>
+        <p class="text-sm mt-1">{{movieDetail.overview}}</p>
+      </div>
+    </div>
+  </div>
+</section>

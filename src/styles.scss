@@ -1,1 +1,112 @@
 /* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Baloo+Paaji+2:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800;900&display=swap');
+
+* {
+  font-family: 'M PLUS Rounded 1c';
+  scroll-behavior: smooth;
+}
+body{
+  box-sizing: border-box;
+  margin: 0;padding: 0;
+}
+
+// ::-webkit-scrollbar {
+//   width: 0;
+//   /* Remove scrollbar space */
+//   background: transparent;
+//   /* Optional: just make scrollbar invisible */
+// }
+
+::-webkit-scrollbar {
+  width: thin;
+  background-color: #000000;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-image: -webkit-gradient(linear,
+      left bottom,
+      left top,
+      color-stop(0.44, rgb(49 46 129 / 0)),
+      color-stop(0.72, rgb(233, 247, 106)),
+      color-stop(0.86, #b4ab03));
+}
+
+h1 {
+  font-family: 'Baloo Paaji 2';
+  font-size: 1.5rem;
+}
+
+h2{
+  font-size: 1.25rem;
+}
+
+h3{
+  font-size: 1.125rem;
+}
+
+
+@layer components{
+
+  .header{
+    @apply text-[3rem]
+  }
+
+  .big{
+    @apply text-[2rem]
+  }
+
+  .normal{
+    @apply text-[.938rem]
+  }
+
+  .small{
+    @apply text-[.813rem]
+  }
+
+  .smaller{
+    @apply text-[.75rem]
+  }
+
+  .mdBig{
+    @apply text-[3rem]
+  }
+
+  .mdH1{
+    @apply text-[2.25rem]
+  }
+
+  .mdH2{
+    @apply text-[1.5rem]
+  }
+
+  .mdH3{
+    @apply text-[1.25rem]
+  }
+
+  .mdNormal{
+    @apply text-[1rem]
+  }
+
+  .mdSmall{
+    @apply text-[.875rem]
+  }
+
+  .mdSmaller{
+    @apply text-[.813rem]
+  }
+
+  .section{
+    padding: 2rem 0 4rem;
+  }
+
+  .container{
+    max-width: 768px;
+  }
+}
