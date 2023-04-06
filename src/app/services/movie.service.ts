@@ -19,7 +19,11 @@ export class MovieService {
           api_key: this.api_key,
         },
       })
-      .pipe(map((res) => res.results));
+      .pipe(map((res) => {
+        console.log(res);
+
+        return res.results
+      }));
   }
 
   getPopular(): Observable<Movie[]> {

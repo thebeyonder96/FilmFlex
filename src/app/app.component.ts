@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { MovieService } from './services/movie.service';
 
 @Component({
@@ -11,9 +11,9 @@ export class AppComponent {
   isShow = false;
   inp: any;
   out: any;
+  nav = false;
 
-  constructor(private movieService:MovieService){
-  }
+  constructor(private movieService: MovieService) {}
 
   toggleNav() {
     this.isShow = !this.isShow;
@@ -25,5 +25,17 @@ export class AppComponent {
       this.out = val.results;
       console.log(this.out);
     });
+  }
+
+  @HostListener('document:scroll')
+  onScroll() {
+    if (
+      document.body.scrollTop > 200 ||
+      document.documentElement.scrollTop > 10
+    ) {
+      this.nav = true;
+    } else {
+      this.nav = false;
+    }
   }
 }

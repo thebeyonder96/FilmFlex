@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, switchMap } from 'rxjs';
 import { Movie } from 'src/app/models/movie';
 import { MovieService } from 'src/app/services/movie.service';
 
@@ -9,14 +9,17 @@ import { MovieService } from 'src/app/services/movie.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
+  $Movies!: Observable<Movie[]>;
   Tmovies!: Observable<Movie[]>;
   Pmovies!: Observable<Movie[]>;
   Umovies!: Observable<Movie[]>;
   TvShows!: Observable<Movie[]>;
   base_img = 'https://image.tmdb.org/t/p/w500';
-  inp:any;
-  out:any;
-  Switch=false;
+  inp: any;
+  out: any;
+  Switch = false;
+
+  $timeFilter = new BehaviorSubject<'day' | 'week'>('day');
 
   constructor(private movieService: MovieService) {}
 
@@ -29,19 +32,22 @@ export class HomeComponent implements OnInit {
 
     this.TvShows = this.movieService.getTvShow();
 
+    this.$Movies = this.$timeFilter.pipe(
+      switchMap((time) => this.movieService.getTrending(time))
+    );
   }
 
-  onSubmit(f:any){
-    this.inp = f.value
-    this.movieService.search(this.inp.query).subscribe((val:any)=>{
+  onSubmit(f: any) {
+    this.inp = f.value;
+    this.movieService.search(this.inp.query).subscribe((val: any) => {
       this.out = val.results;
       console.log(this.out);
-
-    })
+    });
   }
 
-  switch(){
-    this.Switch = !this.Switch
+  switch(time: 'day' | 'week') {
+    this.Switch = !this.Switch;
+    this.$timeFilter.next(time == 'day' ? 'week' : 'day');
+    console.log(time);
   }
-
 }
