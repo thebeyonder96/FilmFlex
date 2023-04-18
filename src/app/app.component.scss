@@ -7,3 +7,7 @@
   color: white;
   transition: all 1s;
 }
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+}

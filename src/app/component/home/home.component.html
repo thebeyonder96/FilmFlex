@@ -1,61 +1,116 @@
-<section
-  class="relative bg-[url(https://image.tmdb.org/t/p/original/ovM06PdF3M8wvKb06i4sjW3xoww.jpg)] bg-cover bg-center bg-no-repeat">
-  <div class="absolute inset-0 bg-white/50 sm:bg-transparent sm:bg-gradient-to-r sm:from-white/95 sm:to-white/25"></div>
+<main class="flex items-center justify-center">
+  <section class="hidden md:block">
+      <div class="flex flex-col items-center justify-between h-full p-3 py-[5rem] gap-12 w-60 text-[#575656] font-semibold">
+        <div class="w-full space-y-3 flex flex-col items-center justify-between">
+          <div class="flex items-center justify-between">
+            <h2 class="text-xs uppercase">News feed</h2>
 
-  <div class="relative mx-auto max-w-screen-xl px-4 py-32 sm:px-6 lg:flex lg:h-screen lg:items-center lg:px-8">
-    <div class="max-w-xl text-center sm:text-left">
-      <h1 class="text-3xl font-extrabold sm:text-5xl">
-        Let us find your
+          </div>
 
-        <strong class="block font-extrabold text-[#b4ab03] drop-shadow-xl">
-          Favorite Movie.
-        </strong>
-      </h1>
+          <div class="flex-1">
+            <ul class="pt-2 pb-4 space-y-1 text-sm">
+              <li class="rounded-sm">
+                <a rel="noopener noreferrer" href="#" class="flex items-center p-2 space-x-3 rounded-md">
+                  <i class="fa-solid fa-home"></i>
+                  <span>Browse</span>
+                </a>
+              </li>
+              <li class="rounded-sm">
+                <a rel="noopener noreferrer" href="#" class="flex items-center p-2 space-x-3 rounded-md">
+                  <i class="fa-solid fa-magnifying-glass"></i>
+                  <span>Watchlist</span>
+                </a>
+              </li>
+              <li class="rounded-sm">
+                <a routerLink="/login" class="flex items-center p-2 space-x-3 rounded-md">
+                  <i class="fa-solid fa-comment"></i>
+                  <span>Coming soon</span>
+                </a>
+              </li>
 
-      <p class="mt-4 max-w-lg sm:text-xl sm:leading-relaxed drop-shadow-2xl">
-        Welcome.
-        Millions of movies, TV shows and people to discover. Explore now.
-      </p>
+            </ul>
+          </div>
+        </div>
+        <div class="mt-1 w-full flex flex-col h-64 overflow-auto items-center justify-between">
+          <div class="space-x-4 flex items-center justify-between">
+            <h2 class="text-xs uppercase">Following</h2>
 
-      <div class="mt-8 flex flex-wrap gap-4 text-center">
-        <a href="#"
-          class="block w-full rounded bg-[#b4ab03] px-12 py-3 text-sm font-medium text-white shadow hover:bg-[#e4d804] focus:outline-none focus:ring active:bg-[#e4d804] transition-all duration-500 sm:w-auto">
-          Get Started
-        </a>
-
-        <a href="#"
-          class="block w-full rounded bg-white px-12 py-3 text-sm font-medium text-[#b4ab03] shadow hover:text-[#b4ab03] focus:outline-none focus:ring active:text-[#b4ab03] transition-all duration-500 sm:w-auto">
-          Learn More
-        </a>
+          </div>
+          <div *ngFor="let item of users | async" class="w-[60%] flex items-start py-4 px-2 justify-around">
+            <img src="{{item.image}}" alt=""
+              class="w-7 h-7 rounded-full object-cover object-center bg-gray-500">
+            <div>
+              <h2 class="text-sm font-semibold">{{item.firstName}}</h2>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-</section>
 
-<div>
-  <button (click)="switch('day')"
-    class="relative text-white flex items-center justify-between border border-[#b4ab03] transition-all duration-500 gap-6 m-10 px-6 py-2 rounded-3xl overflow-hidden">
-    <span [ngClass]="{'right-0' : Switch,'left-0':!Switch}"
-      class="absolute w-1/2 h-full left-0 bg-[#b4ab03] transition-transform"></span>
-    <span class="relative">Day</span>
-    <span class="relative">Week</span>
-  </button>
-</div>
+  </section>
+
+  <section class="relative flex-1 overflow-hidden h-[80vh] mt-[12vh]">
+    <owl-carousel-o [options]="customOptions">
+      <ng-container *ngFor="let movie of Tmovies | async">
+        <ng-template class="slide" carouselSlide>
+          <div class="relative w-[98%] h-[40rem] rounded-3xl overflow-hidden">
+            <img class="absolute inset-0 w-full aspect-video object-cover object-center rounded-3xl"
+              src="https://image.tmdb.org/t/p/original/{{movie.backdrop_path}}" alt="">
+            <div class="absolute inset-0 bg-gradient-to-r from-black via-black/5 to-transparent"></div>
+            <div class="absolute top-1/2 left-10 text-white text-xl md:text-5xl font-bold w-1/4 leading-[3.5rem]">{{movie.title}}</div>
+            <button
+              class="absolute bg-Yellow hover:bg-Yellow/80 duration-700 px-4 py-2 rounded-3xl  bottom-8 left-10 text-white text-xl font-bold shadow-lg">Watch
+              Now</button>
+          </div>
+        </ng-template>
+      </ng-container>
+    </owl-carousel-o>
+  </section>
+</main>
+
+
+
+
+<ng-container *ngIf="{
+    time: $timeFilter | async,
+    show: $showFilter | async
+  } as filter">
+  <div class="flex flex-col md:flex-row items-start md:items-center gap-4 mx-10 font-bold">
+    <button (click)="onTime(filter.time === 'week' ? 'day' : 'week')"
+      class="relative text-white flex items-center justify-between border border-Yellow transition-transform duration-1000 gap-6  px-8 py-1 rounded-3xl overflow-hidden">
+      <span [ngClass]="{'translate-x-[91px]' : filter.time === 'week' ,'translate-x-0':!Switch}"
+        class="absolute w-1/2 h-7 mx-0.5 rounded-3xl left-0 bg-Yellow transition-transform duration-700"></span>
+      <span class="relative pl-1">Day &nbsp;</span>
+      <span class="relative">Week</span>
+    </button>
+
+    <button (click)="onShow(filter.show === 'movie' ? 'tv' : 'movie')"
+      class="relative text-white flex items-center justify-between border border-Yellow transition-transform duration-1000 gap-6 px-6 py-1 rounded-3xl capitalize overflow-hidden">{{filter.show}}</button>
+  </div>
+
 <!-- Trending -->
 
 <section id="trending">
-  <h1 class="font-bold text-2xl m-4 px-6 text-[#e4d804]">Trending</h1>
+  <h1 class="font-bold text-2xl m-4 px-6 text-Yellow">Trending</h1>
   <div class="flex  m-4 w-full  items-center scroll-smooth rounded">
-    <div class="flex px-4 overflow-x-scroll snap-x scroll-p-6 scroll-m-5 w-screen">
-      <div *ngFor="let movie of $Movies | async" class="flex m-4 bg-gray-900 shadow-lg px-4 rounded-md">
+    <div class="flex pr-4 overflow-x-scroll snap-x scroll-p-6 scroll-m-5 w-screen">
+      <div *ngFor="let movie of $Trending | async"
+        class="flex m-4 bg-gray-900 shadow-lg px-4 py-2 rounded-md transition-all duration-500">
         <div [routerLink]="['/single',movie.id]" class="w-[200px] md:w-[320px] text-white cursor-pointer">
-          <img alt="image" class="object-cover object-center"
+          <img alt="image" class="object-cover object-center transition-all hover:scale-105 duration-500"
             src="https://image.tmdb.org/t/p/w500{{movie.poster_path}}">
           <div class="mt-4">
-            <h2 class="text-red-600 title-font text-lg font-medium">{{movie.title}}</h2>
-            <h3 class="text-gray-500 text-xs tracking-widest title-font mb-1">{{movie.release_date | date: 'longDate'}}
+
+            <h2 *ngIf="movie.title" class="text-red-600 title-font text-lg font-medium">{{movie.title}}</h2>
+            <h2 *ngIf="movie.name" class="text-red-600 title-font text-lg font-medium">{{movie.name}}</h2>
+            <h3 *ngIf="movie.release_date" class="text-gray-500 text-xs tracking-widest title-font mb-1">
+              {{movie.release_date |
+              date: 'longDate'}}</h3>
+            <h3 *ngIf="movie.first_air_date" class="text-gray-500 text-xs tracking-widest title-font mb-1">
+              {{movie.first_air_date
+              | date: 'longDate'}}
             </h3>
-            <p class="mt-1"><i class="fa-solid fa-star text-[#f5c518] shadow-lg"></i> {{movie.vote_average | number:
+
+            <p class="mt-1"><i class="fa-solid fa-star text-yellow-500 shadow-lg"></i> {{movie.vote_average | number:
               '1.0-0'}}/10</p>
           </div>
         </div>
@@ -63,22 +118,23 @@
     </div>
   </div>
 </section>
+</ng-container>
 
 <!-- Popular -->
 
 <section id="popular">
-  <h1 class="font-bold text-2xl m-4 px-6 text-[#e4d804]">Popular</h1>
+  <h1 class="font-bold text-2xl m-4 px-6 text-Yellow">Popular</h1>
   <div class="flex  m-4 w-full  items-center scroll-smooth rounded">
     <div class="flex px-4 overflow-x-scroll snap-x scroll-p-6 scroll-m-5 w-full">
       <div *ngFor="let movie of Pmovies | async" class="flex m-4 bg-gray-900 shadow-lg px-4 rounded-md">
-        <div class="w-[200px] md:w-[320px] text-white">
+        <div [routerLink]="['/single',movie.id]" class="w-[200px] md:w-[320px] text-white cursor-pointer">
           <img alt="image" class="object-cover object-center"
             src="https://image.tmdb.org/t/p/w500{{movie.poster_path}}">
           <div class="mt-4">
             <h2 class="text-red-600 title-font text-lg font-medium">{{movie.title}}</h2>
             <h3 class="text-gray-500 text-xs tracking-widest title-font mb-1">{{movie.release_date | date: 'longDate'}}
             </h3>
-            <p class="mt-1"><i class="fa-solid fa-star text-[#f5c518] shadow-lg"></i> {{movie.vote_average | number:
+            <p class="mt-1"><i class="fa-solid fa-star text-yellow-500 shadow-lg"></i> {{movie.vote_average | number:
               '1.0-0'}}/10</p>
           </div>
         </div>
@@ -90,18 +146,18 @@
 <!-- Upcoming -->
 
 <section id="upcoming">
-  <h1 class="font-bold text-2xl m-4 px-6 text-[#e4d804]">Upcoming</h1>
+  <h1 class="font-bold text-2xl m-4 px-6 text-Yellow">Upcoming</h1>
   <div class="flex  m-4 w-full  items-center scroll-smooth rounded">
     <div class="flex px-4 overflow-x-scroll snap-x scroll-p-6 scroll-m-5 w-full">
       <div *ngFor="let movie of Umovies | async" class="flex m-4 bg-gray-900 shadow-lg px-4 rounded-md">
-        <div class="w-[200px] md:w-[320px] text-white">
+        <div [routerLink]="['/single',movie.id]" class="w-[200px] md:w-[320px] text-white cursor-pointer">
           <img alt="image" class="object-cover object-center"
             src="https://image.tmdb.org/t/p/w500{{movie.poster_path}}">
           <div class="mt-4">
             <h2 class="text-red-600 title-font text-lg font-medium">{{movie.title}}</h2>
             <h3 class="text-gray-500 text-xs tracking-widest title-font mb-1">{{movie.release_date | date: 'longDate'}}
             </h3>
-            <p class="mt-1"><i class="fa-solid fa-star text-[#f5c518] shadow-lg"></i> {{movie.vote_average | number:
+            <p class="mt-1"><i class="fa-solid fa-star text-yellow-500 shadow-lg"></i> {{movie.vote_average | number:
               '1.0-0'}}/10</p>
           </div>
         </div>
@@ -113,18 +169,19 @@
 <!-- Tv Shows -->
 
 <section id="tv">
-  <h1 class="font-bold text-2xl m-4 px-6 text-[#e4d804]">TV Shows</h1>
+  <h1 class="font-bold text-2xl m-4 px-6 text-Yellow">TV Shows</h1>
   <div class="flex  m-4 w-full  items-center scroll-smooth rounded">
     <div class="flex px-4 overflow-x-scroll snap-x scroll-p-6 scroll-m-5 w-full">
-      <div *ngFor="let movie of Umovies | async" class="flex m-4 bg-gray-900 shadow-lg px-4 rounded-md">
-        <div class="w-[200px] md:w-[320px] text-white">
+      <div *ngFor="let movie of TvShows | async" class="flex m-4 bg-gray-900 shadow-lg px-4 rounded-md">
+        <div [routerLink]="['/single',movie.id]" class="w-[200px] md:w-[320px] text-white cursor-pointer">
           <img alt="image" class="object-cover object-center"
             src="https://image.tmdb.org/t/p/w500{{movie.poster_path}}">
           <div class="mt-4">
-            <h2 class="text-red-600 title-font text-lg font-medium">{{movie.title}}</h2>
-            <h3 class="text-gray-500 text-xs tracking-widest title-font mb-1">{{movie.release_date | date: 'longDate'}}
+            <h2 class="text-red-600 title-font text-lg font-medium">{{movie.name}}</h2>
+            <h3 class="text-gray-500 text-xs tracking-widest title-font mb-1">{{movie.first_air_date | date:
+              'longDate'}}
             </h3>
-            <p class="mt-1"><i class="fa-solid fa-star text-[#f5c518] shadow-lg"></i> {{movie.vote_average | number:
+            <p class="mt-1"><i class="fa-solid fa-star text-yellow-500 shadow-lg"></i> {{movie.vote_average | number:
               '1.0-0'}}/10</p>
           </div>
         </div>
@@ -132,3 +189,19 @@
     </div>
   </div>
 </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

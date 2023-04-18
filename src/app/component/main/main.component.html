@@ -1,0 +1,39 @@
+<section class="max-w-screen-xl mx-auto bg-[#0f0f0f] text-slate-50">
+  <header class="flex items-center justify-between h-20 px-8">
+    <div class="flex items-center justify-between gap-36">
+      <h1 class="cursor-pointer font-bold text-2xl">FilmFlex</h1>
+
+      <div class="flex items-center gap-4">
+        <div class="flex items-center gap-4">
+          <i class="fa-solid fa-angle-left"></i>
+          <i class="fa-solid fa-angle-right text-white/40"></i>
+        </div>
+        <div class="relative">
+          <i class="fa-solid fa-magnifying-glass absolute left-4 top-2"></i>
+          <input class="relative pl-10 py-1 bg-transparent border border-slate-500 rounded-3xl placeholder:text-slate-600" type="text" placeholder="Search everything">
+          <i class="fa-solid fa-sliders absolute right-4 top-2"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-4">
+      <i class="fa-solid fa-comment"></i>
+      <i class="fa-solid fa-bell"></i>
+      <div class="w-10 h-10 rounded-full bg-red-500">
+        <img src="" alt="">
+      </div>
+    </div>
+  </header>
+  <main class="max-w-screen-xl mx-auto bg-[#0f0f0f] text-slate-50">
+    <div class="flex">
+      <div class="flex-[2] bg-emerald-300  h-[calc(100vh-5rem)]">aa</div>
+      <div class="flex-[7] bg-purple-300  h-[calc(100vh-5rem)]">
+        <div class="w-screen relative flex overflow-auto">
+          <ng-container *ngFor="let item of Tmovies | async">
+            <img class="relative object-cover w-full aspect-video" src="{{imgUrl}}/{{item.backdrop_path}}" alt="">
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </main>
+</section>

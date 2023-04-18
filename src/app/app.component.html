@@ -1,26 +1,50 @@
 <section class="px-2 py-2 bg-black">
   <header [ngClass]="{'bar':nav}" class="fixed top-0 z-50 w-full flex items-center justify-between px-6 py-6">
-    <div class="font-bold text-2xl"><i class="fa-solid fa-tape text-[#e4d804]"></i> MovFlex</div>
-    <!-- Search Bar -->
-    <form class="hidden md:flex items-center justify-between" #f="ngForm" (ngSubmit)="onSubmit(f)">
-      <input class="border md:px-10 md:py-2 outline-transparent rounded-l-3xl text-slate-700 border-slate-200 focus:ring-[#e4d804] focus:ring-2" type="text" name="query"
-        (ngModel)="inp">
-      <button class="hidden md:block md:px-4 md:py-2 border border-[#e4d804] bg-[#e4d804] text-white font-bold drop-shadow-2xl rounded-r-3xl">Search</button>
-    </form>
-    <!-- Toggle Nav -->
+    <div routerLink="" class="cursor-pointer font-bold text-2xl text-Yellow"><i class="fa-solid fa-tape text-Yellow"></i> FilmFlex</div>
+    <div class="flex items-center gap-4">
+      <form class="hidden md:flex items-center justify-between" #f="ngForm" (ngSubmit)="onSubmit(f)">
+        <input
+          class="border md:px-10 md:py-2 outline-transparent rounded-l-3xl text-slate-700 border-slate-200 focus:ring-Yellow focus:ring-2"
+          type="text" name="query" (ngModel)="inp">
+        <button
+          class="hidden md:block md:px-4 md:py-2 border border-Yellow bg-Yellow text-white font-bold drop-shadow-2xl rounded-r-3xl">Search</button>
+      </form>
+
+      <div class="mr-7">
+        <div class="dropdown relative">
+          <button class="text-gray-700 font-semibold py-1 px-4 rounded inline-flex items-center gap-2">
+                  <i routerLink="/login" class="fa-solid fa-user text-2xl cursor-pointer"></i>
+                  <p *ngIf="user" class="text-white text-xl">{{user}}</p>
+          </button>
+          <ul  *ngIf="user" class="dropdown-menu absolute hidden text-gray-700 pt-1 text-sm">
+            <li class=""><a class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
+                href="#">Profile</a></li>
+            <li class=""><a class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">Setting</a></li>
+            <li class=""><a (click)="logout()" class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">Logout</a></li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
     <div class="block md:hidden" (click)="toggleNav()"><i class="fa-solid fa-bars text-2xl text-white pr-2"></i></div>
 
     <div [class.nav]="isShow" class="w-2/3 h-screen flex flex-col items-center gap-2 pt-20 fixed right-0 top-0 z-50 backdrop-blur-3xl border-l-4 transition-transform duration-700 translate-x-[100%]">
       <i (click)="toggleNav()" class="fa-solid fa-xmark text-red-500 text-2xl absolute top-5 right-5"></i>
 
-      <!-- Links -->
+      <form class="flex flex-col gap-2 items-center justify-between mb-4" #g="ngForm" (ngSubmit)="navMob(g)">
+        <input
+          class="w-[80%] border px-2 py-1 outline-transparent rounded-3xl text-slate-700 text-sm border-slate-200 focus:ring-Yellow focus:ring-2"
+          type="text" name="query" placeholder="Search movie,tv..." (ngModel)="inp">
+
+      </form>
+
       <a (click)="toggleNav()" class="text-white text-lg font-bold drop-shadow-2xl" href="#trending">Trending</a>
       <a (click)="toggleNav()" class="text-white text-lg font-bold drop-shadow-2xl" href="#popular">Popular</a>
       <a (click)="toggleNav()" class="text-white text-lg font-bold drop-shadow-2xl" href="#upcoming">Upcoming</a>
       <a (click)="toggleNav()" class="text-white text-lg font-bold drop-shadow-2xl" href="#tv">Tv</a>
     </div>
   </header>
-  <!-- Results -->
+
   <div *ngIf="out">
     <h1 class="font-bold text-2xl m-4 px-6">Results</h1>
     <div class="flex  m-4 w-full  items-center scroll-smooth rounded">
@@ -34,7 +58,7 @@
               <h3 class="text-gray-500 text-xs tracking-widest title-font mb-1">{{movie.release_date | date:
                 'longDate'}}
               </h3>
-              <p class="mt-1"><i class="fa-solid fa-star text-[#f5c518] shadow-lg"></i> {{movie.vote_average | number:
+              <p class="mt-1"><i class="fa-solid fa-star text-Yellow shadow-lg"></i> {{movie.vote_average | number:
                 '1.0-0'}}/10</p>
             </div>
           </div>
@@ -42,6 +66,8 @@
       </div>
     </div>
   </div>
-  <!-- Home Section -->
-  <app-home></app-home>
+
+  <router-outlet></router-outlet>
 </section>
+
+

@@ -10,19 +10,23 @@ import { MovieService } from 'src/app/services/movie.service';
 })
 export class SingleMovieComponent implements OnInit {
   movieId!: number;
-  movieDetail!: any;
+  type: any;
+  movieDetails!: any;
+  imageUrl = 'https://image.tmdb.org/t/p/original';
 
   @Input() data: any;
 
   constructor(private service: MovieService, private route: ActivatedRoute) {
-    this.route.params.subscribe((val) => (this.movieId = val['id']));
-    this.service.singleMovie(this.movieId).subscribe(async (val: any) => {
+    this.route.params.subscribe((val) => {
       console.log(val);
-      this.movieDetail = await val;
+
+      this.movieId = val['id'];
+      this.service.singleMovie(this.movieId).subscribe(async (val: any) => {
+        this.movieDetails = await val;
+        console.log(this.movieDetails);
+      });
     });
   }
 
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void {}
 }

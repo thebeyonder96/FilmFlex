@@ -1,21 +1,42 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { MovieService } from './services/movie.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit,OnChanges{
   title = 'Port';
   isShow = false;
   inp: any;
   out: any;
   nav = false;
+  user!:string|null;
 
-  constructor(private movieService: MovieService) {}
+  constructor(private movieService: MovieService,private route:ActivatedRoute) {
+
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    this.user = localStorage.getItem('logUser');
+  }
+  ngOnInit(): void {
+    this.user = localStorage.getItem('logUser');
+    console.log(JSON.stringify(this.user));
+  }
+
+
 
   toggleNav() {
+    this.isShow = !this.isShow;
+  }
+
+  navMob(f:any){
+    this.inp = f.value;
+    this.movieService.search(this.inp.query).subscribe((val: any) => {
+      this.out = val.results;
+    });
     this.isShow = !this.isShow;
   }
 
@@ -23,8 +44,11 @@ export class AppComponent {
     this.inp = f.value;
     this.movieService.search(this.inp.query).subscribe((val: any) => {
       this.out = val.results;
-      console.log(this.out);
     });
+  }
+
+  logout(){
+    localStorage.removeItem('logUser');
   }
 
   @HostListener('document:scroll')
