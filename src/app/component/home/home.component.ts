@@ -11,11 +11,13 @@ import {
 } from 'rxjs';
 import { Movie } from 'src/app/models/movie';
 import { MovieService } from 'src/app/services/movie.service';
+import { fadeInOut } from '../../animation';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
+  animations: [fadeInOut],
 })
 export class HomeComponent implements OnInit {
   $Movies!: Observable<Movie[]>;

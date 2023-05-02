@@ -10,6 +10,7 @@ import { MovieService } from 'src/app/services/movie.service';
 })
 export class SingleMovieComponent implements OnInit {
   movieId!: number;
+  show!:string;
   type: any;
   movieDetails!: any;
   imageUrl = 'https://image.tmdb.org/t/p/original';
@@ -21,7 +22,8 @@ export class SingleMovieComponent implements OnInit {
       console.log(val);
 
       this.movieId = val['id'];
-      this.service.singleMovie(this.movieId).subscribe(async (val: any) => {
+      this.show = val['show']
+      this.service.singleMovie(this.movieId,this.show).subscribe(async (val: any) => {
         this.movieDetails = await val;
         console.log(this.movieDetails);
       });

@@ -1,0 +1,31 @@
+<div class="w-screen h-screen">
+  <h1 class="font-bold text-2xl m-4 px-6 float-left">Results</h1>
+  <div class="flex  m-4 w-screen  items-center scroll-smooth rounded">
+    <div class="flex px-4 overflow-x-scroll snap-x scroll-p-6 scroll-m-5 w-screen">
+      <div *ngFor="let movie of out" class="flex m-4 bg-gray-900 shadow-lg px-4 rounded-md">
+        <div [routerLink]="['/single',movie.id]" class="w-[200px] md:w-[320px] text-white">
+          <img alt="image" class="object-cover object-center"
+            src="https://image.tmdb.org/t/p/w500{{movie.poster_path}}">
+          <div class="mt-4">
+            <h2 class="text-red-600 title-font text-lg font-medium">{{movie.title}}</h2>
+            <h3 class="text-gray-500 text-xs tracking-widest title-font mb-1">{{movie.release_date | date:
+              'longDate'}}
+            </h3>
+            <p class="mt-1"><i class="fa-solid fa-star text-Yellow shadow-lg"></i> {{movie.vote_average | number:
+              '1.0-0'}}/10</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="w-screen h-screen bg-gradient-to-r from-fuchsia-300 to-teal-200 flex items-center justify-center">
+  <div class="w-[95vw] h-screen flex gap-4 overflow-x-auto">
+    <div  *ngFor="let movie of out"  class="">
+      <div class="relative w-[90vw] aspect-[9/16] m-4">
+        <img alt="image" class="object-cover object-center" src="https://image.tmdb.org/t/p/w500{{movie.poster_path}}">
+      </div>
+    </div>
+  </div>
+</div> -->

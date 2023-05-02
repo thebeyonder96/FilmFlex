@@ -84,12 +84,15 @@ export class MovieService {
     });
   }
 
-  singleMovie(id: number) {
-    return this.http.get(`${this.baseUrl}/movie/${id}`, {
-      params: {
-        api_key: this.api_key,
-      },
-    });
+  singleMovie(id: number,show:string) {
+
+      return this.http.get(`${this.baseUrl}/${show}/${id}`, {
+        params: {
+          api_key: this.api_key,
+        },
+      });
+
+
   }
 
   user() {
